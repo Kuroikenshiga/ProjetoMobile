@@ -2,17 +2,17 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View,ImageBackground,TextInput,Button,TouchableOpacity,Image,ScrollView,Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-export default function App({msgs,myId,navigation}) {
-    
+export default function App({msgs,myId}) {
+    const [styleText,setStyleText] = useState(null);
     
      
 
     elements = new Array();
     for(let i = 0;i < msgs.length;i++){
         elements.push(
-          <View style={styles.container}>
-            
-          </View>
+        
+            <Text style={msgs[i].remetente == myId?styles.msgRight:styles.msgLeft}>{msgs[i].mensagem}</Text>
+         
           )
     }
 
@@ -76,6 +76,10 @@ const styles = StyleSheet.create({
     bottom:0
 
   },
+  textContainer:{
+    width:'100%'
+
+  },
   scroll:{
     width:'100%',
     display:'flex',
@@ -92,6 +96,6 @@ const styles = StyleSheet.create({
   },
   msgLeft:{
     backgroundColor:'gray',
-    textAlign:'left'
+    alignSelf:'flex-start'
   }
 });
