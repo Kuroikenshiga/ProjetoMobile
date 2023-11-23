@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Mensage from '../comps/msgComponent.js';
 export default function App({navigation,route}) {
 const {idConversa,idUser} = route.params;
-
+const rolagem = ScrollView;
 const [component,setComponent] = useState(null)
 const [id,setId] = useState(null)
 const [msg,setMsg] = useState('');
@@ -42,13 +42,14 @@ const recuperaValor = async(key)=>{
 
  useEffect(()=>{
   
-    let obj = new Object();
+    setInterval(()=>{
+      let obj = new Object();
     obj.usuario = new Object();
     obj.usuario.conversa = idConversa;
     obj.mvc = new Object();
     obj.mvc.class = 'mensagem';
     obj.mvc.method = 'listaMensagens';
-    
+    console.log(1)
     fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
     method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
     })
@@ -56,6 +57,7 @@ const recuperaValor = async(key)=>{
     .then((objResponse)=>{setComponent(<Mensage msgs={objResponse.msg}myId={idUser} />)})
     
     .catch((error)=>{console.log(error)})
+    },1000)
     // let xml = new XMLHttpRequest()
     //                     xml.open('POST','https://projeto-mobile.rogeriopalafoz1.repl.co',true);
     //                     xml.setRequestHeader('content-type','application/json')
@@ -71,6 +73,9 @@ const recuperaValor = async(key)=>{
   return (
 
     <ImageBackground style={styles.container}>
+      
+        
+
          <ScrollView contentContainerStyle={styles.scroll2} style={styles.scroll}> 
          {component}
             
@@ -96,19 +101,41 @@ const recuperaValor = async(key)=>{
             // console.log(id)
             //clearData()
         
+            fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
+            method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
+            })
+            .then((response)=>response.json())
+            .then((objResponse)=>{
+              let obj = new Object();
+            obj.usuario = new Object();
+            obj.usuario.conversa = idConversa;
+            obj.mvc = new Object();
+            obj.mvc.class = 'mensagem';
+            obj.mvc.method = 'listaMensagens';
+            console.log(1)
+            fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
+            method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
+            })
+            .then((response)=>response.json())
+            .then((objResponse)=>{setComponent(<Mensage msgs={objResponse.msg}myId={idUser} />)})
             
+            .catch((error)=>{console.log(error)})
+            })
+            
+            .catch((error)=>{console.log(error)});
+
                 
 
-                 let xml = new XMLHttpRequest()
-                        xml.open('POST','https://projeto-mobile.rogeriopalafoz1.repl.co',true);
-                        xml.setRequestHeader('content-type','application/json')
+                //  let xml = new XMLHttpRequest()
+                //         xml.open('POST','https://projeto-mobile.rogeriopalafoz1.repl.co',true);
+                //         xml.setRequestHeader('content-type','application/json')
             
-                        xml.onreadystatechange = ()=>{
-                          if(xml.readyState == 4 && xml.status == 200){
-                            console.log(xml.responseText)
-                          }
-                        }
-                        xml.send(JSON.stringify(obj))
+                //         xml.onreadystatechange = ()=>{
+                //           if(xml.readyState == 4 && xml.status == 200){
+                //             console.log(xml.responseText)
+                //           }
+                //         }
+                //         xml.send(JSON.stringify(obj))
             
             
             }}>
@@ -128,7 +155,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
     flexDirection:'column',
-    alignItems:'center'
+    alignItems:'center',
+    
   },
   input:{
     width:'80%',
@@ -156,9 +184,10 @@ const styles = StyleSheet.create({
   },
   scroll:{
     width:'100%',
+    
   },
   scroll2:{
-   
+    paddingBottom:'20%',
     display:'flex',
     flexDirection:'column',
     alignItems:'center'
@@ -167,8 +196,9 @@ const styles = StyleSheet.create({
     alignSelf:'baseline',
     width:'100%',
     height:'10%',
-    
+    position:'absolute',
     flexDirection:'row',
-    justifyContent:'flex-end'
+    justifyContent:'flex-end',
+    bottom:0
   }
 });

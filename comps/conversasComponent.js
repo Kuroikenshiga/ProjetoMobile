@@ -16,13 +16,13 @@ export default function App({conversas,users,myId,navigation}) {
     elements = new Array();
     for(let i = 0;i < conversas.length;i++){
         elements.push(
-          <View style={styles.container}>
+          
             <TouchableOpacity onPress={()=>{navigation.navigate('Mensagens',{idConversa:conversas[i].id,idUser:myId})}} key={conversas[i].id} style={styles.containerPressable}>
               <Image style={styles.imageUser} key={i} source={require('../img/user.png')}/>
               <Text key={i+1} style={styles.text}>{conversas[i].user1 == myId?searchUserName(users,conversas[i].user2):searchUserName(users,conversas[i].user1)}</Text>
               
             </TouchableOpacity>
-          </View>
+          
           )
     }
 

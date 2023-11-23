@@ -11,7 +11,7 @@ export default function App({msgs,myId}) {
     for(let i = 0;i < msgs.length;i++){
         elements.push(
         
-            <Text style={msgs[i].remetente == myId?styles.msgRight:styles.msgLeft}>{msgs[i].mensagem}</Text>
+            <View style={styles.container} key={i}>< Text key={msgs[i].id} style={msgs[i].remetente == myId?styles.msgRight:styles.msgLeft}>{msgs[i].mensagem}</Text></View>
          
           )
     }
@@ -92,10 +92,20 @@ const styles = StyleSheet.create({
   },
   msgRight:{
     backgroundColor:'green',
-    textAlign:'right'
+    textAlign:'left',
+    fontSize:17,
+    maxWidth:'70%',
+    marginTop:'2%',
+    borderRadius:10,
+    padding:'2%'
   },
   msgLeft:{
     backgroundColor:'gray',
-    alignSelf:'flex-start'
+    alignSelf:'flex-start',
+    fontSize:17,
+    maxWidth:'70%',
+    marginTop:'2%',
+    borderRadius:10,
+    padding:'2%'
   }
 });
