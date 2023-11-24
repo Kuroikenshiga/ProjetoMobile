@@ -10,6 +10,8 @@ const rolagem = ScrollView;
 const [component,setComponent] = useState(null)
 const [id,setId] = useState(null)
 const [msg,setMsg] = useState('');
+const [icon,setIcon] = useState(require('../img/chat.png'))
+const [focused,setFocused] = useState(false)
 const clearData = async()=>{
    
     try{
@@ -42,14 +44,14 @@ const recuperaValor = async(key)=>{
 
  useEffect(()=>{
   
-    setInterval(()=>{
+    const interval = setInterval(()=>{
       let obj = new Object();
     obj.usuario = new Object();
     obj.usuario.conversa = idConversa;
     obj.mvc = new Object();
     obj.mvc.class = 'mensagem';
     obj.mvc.method = 'listaMensagens';
-    console.log(1)
+    //console.log(1)
     fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
     method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
     })
@@ -68,6 +70,9 @@ const recuperaValor = async(key)=>{
     //                       }
     //                     }
     //                     xml.send(JSON.stringify(obj))
+    return () =>{
+      clearInterval(interval);
+     }
  },[])
  
   return (
@@ -84,7 +89,7 @@ const recuperaValor = async(key)=>{
         
         
         <View style={styles.bottom}>
-            <TextInput onChangeText={(texto)=>{setMsg(texto)}} style={styles.input} />
+            <TextInput onChangeText={(texto)=>{setMsg(texto)}} style={styles.input}  />
             <TouchableOpacity  style={styles.btn} onPress={()=>{
              let  now = new Date()
             obj = new Object();
@@ -139,7 +144,7 @@ const recuperaValor = async(key)=>{
             
             
             }}>
-            <Image source={require('../img/add.png')}/>
+            <Image source={icon}/>
             </TouchableOpacity>
         </View>
     </ImageBackground>

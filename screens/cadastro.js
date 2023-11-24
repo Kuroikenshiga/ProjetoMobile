@@ -3,7 +3,7 @@ import { useState,useEffect } from 'react';
 import {StyleSheet, Text, View,ImageBackground,TextInput,Button, Alert } from 'react-native';
 //import {AsyncStorage} from '@react-native-async-storage/async-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-export default function App() {
+export default function App({navigation}) {
   const[nome,setNome] = useState("");
   const[senha,setSenha] = useState("");
   const obj = new Object();
@@ -42,7 +42,7 @@ export default function App() {
               fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
                 method:'POST', headers: {'contentType':'application/json'},body:JSON.stringify(obj)
               }).then((response)=>response.json()).then((obj)=>{
-                guardaValor('meuId',JSON.stringify(obj.msg))
+                navigation.navigate('Login')
                 
                 
 
