@@ -15,6 +15,17 @@ export default function App({navigation}) {
   obj.usuario.nome = nome;
   obj.usuario.senha = senha;
 //End data section//
+const clearData = async()=>{
+   
+  try{
+     AsyncStorage.setItem('meuId','')
+    Alert.alert('Dados limpos')
+  }
+  catch(error){
+    Alert.alert('Erro ao limpar os dados',error.message)
+  
+ }
+}
 const guardaValor =  async(key,value)=>{
   value = JSON.stringify(value)
   try{
@@ -33,7 +44,7 @@ const recuperaValor = async(key)=>{
     
     if(values !== null){
       
-      console.log(values)
+      console.log(values+89)
       return values
     }
     return null
@@ -45,7 +56,21 @@ const recuperaValor = async(key)=>{
 
 useEffect(()=>{
   recuperaValor('meuId').then((id)=>{ if(id != null){
-    navigation.navigate('Conversas')
+    let objV = new Object();
+    objV.mvc = new Object();
+    objV.usuario = new Object()
+    objV.mvc.class = "usuario";
+    objV.mvc.method = "verificaUsuario";
+    objV.usuario.id = id;
+    fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
+                method:'POST', headers: {'contentType':'application/json'},body:JSON.stringify(objV)
+              }).then((response)=>{ 
+              return response.json()})
+              .then((obj1)=>{ console.log(JSON.stringify(obj1))
+                if(obj1.msg != "NA"){
+               navigation.navigate('Conversas')}
+              else{Alert.alert('Aviso',"Usuario não encotrado");clearData()}})
+              .catch((error)=>{})
   }
   else{
    console.log(id+'////')
@@ -72,17 +97,18 @@ useEffect(()=>{
                 method:'POST', headers: {'contentType':'application/json'},body:JSON.stringify(obj)
               }).then((response)=>{ 
               return response.json()})
-              .then((obj1)=>{
+              .then((obj1)=>{Alert.alert(JSON.stringify(obj1))
                 if(obj1.msg != "NA"){ guardaValor('meuId',obj1.msg)
                navigation.navigate('Conversas')}
               else{Alert.alert('Aviso',"Usuario não encotrado")}})
               .catch((error)=>{})
+              
             }
           }
         
         /></View>
         <View style={styles.btn}><Button title='Me cadastrar' color='#00000000' onPress={()=>{navigation.navigate('Cadastro')}}/></View>
-        <View style={styles.btn}><Button title='Amigos' color='#00000000' onPress={()=>{console.log(teste)}}/></View>
+        <View style={styles.btn}><Button title='Amigos' color='#00000000' onPress={()=>{console.log(teste)+'23'}}/></View>
     </ImageBackground>
   );
 }

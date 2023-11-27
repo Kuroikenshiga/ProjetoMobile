@@ -42,20 +42,23 @@ for(let i = 0;i < 10;i++){
 
 
  useEffect(()=>{
-  recuperaValor('meuId').then((id)=>{setId(id)
-    let obj = new Object();
-    obj.id = id;
-    obj.mvc = new Object();
-    obj.mvc.class = 'conversa';
-    obj.mvc.method = 'listarConversas';
+  recuperaValor('meuId').then((id)=>{setId(id);
+    // setInterval(()=>{
+    //   let obj = new Object();
+    // obj.id = id;
+    // obj.mvc = new Object();
+    // obj.mvc.class = 'conversa';
+    // obj.mvc.method = 'listarConversas';
     
-    fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
-    method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
-    })
-    .then((response)=>response.json())
-    .then((objResponse)=>{setComponent(<Chats navigation={navigation} conversas={objResponse.chats} users={objResponse.users} myId={id}/>)})
+    // fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
+    // method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
+    // })
+    // .then((response)=>response.json())
+    // .then((objResponse)=>{setComponent(<Chats navigation={navigation} conversas={objResponse.chats} users={objResponse.users} myId={id}/>); console.log('////')})
     
-    .catch((error)=>{console.log(error)})
+    // .catch((error)=>{console.log(error)})
+    // },1000)
+
   })
   return () =>{
     return 0
