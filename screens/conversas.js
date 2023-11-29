@@ -4,12 +4,15 @@ import { StyleSheet, Text, View,ImageBackground,TextInput,Button,TouchableOpacit
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Chats from '../comps/conversasComponent.js'
 
-export default function App({navigation}) {
+export default function App({navigation,route}) {
+  const {id} = route.params
+  //console.log(id+'0000')
 const [text,setText] = useState(new Array())
 const [component,setComponent] = useState(<Chats conversas={[]} myId={id} users={[]}/>)
-const [id,setId] = useState(null)
+//const [id,setId] = useState(null)
+
 const clearData = async()=>{
-   
+
     try{
        AsyncStorage.setItem('meuId','')
       Alert.alert('Dados limpos')
@@ -42,27 +45,25 @@ for(let i = 0;i < 10;i++){
 
 
  useEffect(()=>{
-  recuperaValor('meuId').then((id)=>{setId(id);
-    // setInterval(()=>{
-    //   let obj = new Object();
-    // obj.id = id;
-    // obj.mvc = new Object();
-    // obj.mvc.class = 'conversa';
-    // obj.mvc.method = 'listarConversas';
     
-    // fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
-    // method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
-    // })
-    // .then((response)=>response.json())
-    // .then((objResponse)=>{setComponent(<Chats navigation={navigation} conversas={objResponse.chats} users={objResponse.users} myId={id}/>); console.log('////')})
     
-    // .catch((error)=>{console.log(error)})
-    // },1000)
+      let obj = new Object();
+    obj.id = id;
+    obj.mvc = new Object();
+    obj.mvc.class = 'conversa';
+    obj.mvc.method = 'listarConversas';
+    
+    fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
+    method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
+    })
+    .then((response)=>response.json())
+    .then((objResponse)=>{setComponent(<Chats navigation={navigation} conversas={objResponse.chats} users={objResponse.users} myId={id}/>); console.log()})
+    
+    .catch((error)=>{console.log(error)})
+    
+  
+   
 
-  })
-  return () =>{
-    return 0
-  }
  },[])
   return (
 

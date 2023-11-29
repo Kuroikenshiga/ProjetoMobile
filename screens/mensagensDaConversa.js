@@ -51,7 +51,7 @@ const recuperaValor = async(key)=>{
     obj.mvc = new Object();
     obj.mvc.class = 'mensagem';
     obj.mvc.method = 'listaMensagens';
-    //console.log(1)
+    console.log(1)
     fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
     method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
     })

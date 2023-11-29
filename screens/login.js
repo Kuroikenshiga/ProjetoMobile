@@ -68,7 +68,7 @@ useEffect(()=>{
               return response.json()})
               .then((obj1)=>{ console.log(JSON.stringify(obj1))
                 if(obj1.msg != "NA"){
-               navigation.navigate('Conversas')}
+               navigation.navigate('Conversas',{id:obj1.msg})}
               else{Alert.alert('Aviso',"Usuario não encotrado");clearData()}})
               .catch((error)=>{})
   }
@@ -99,7 +99,7 @@ useEffect(()=>{
               return response.json()})
               .then((obj1)=>{Alert.alert(JSON.stringify(obj1))
                 if(obj1.msg != "NA"){ guardaValor('meuId',obj1.msg)
-               navigation.navigate('Conversas')}
+               navigation.navigate('Conversas',{id:obj1.msg})}
               else{Alert.alert('Aviso',"Usuario não encotrado")}})
               .catch((error)=>{})
               
