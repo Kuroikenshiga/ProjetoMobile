@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Mensage from '../comps/msgComponent.js';
 export default function App({navigation,route}) {
-const {idConversa,idUser} = route.params;
+const {idConversa,idUser,intervalToClear} = route.params;
 const rolagem = ScrollView;
 const [component,setComponent] = useState(null)
 const [id,setId] = useState(null)
@@ -40,18 +40,19 @@ const recuperaValor = async(key)=>{
   }
 }
 
-
+let countRefresh = 0;
 
  useEffect(()=>{
-  
-    const interval = setInterval(()=>{
+    //clearInterval(intervalToClear)
+    const intervalo = setInterval(()=>{
+      countRefresh++;
       let obj = new Object();
     obj.usuario = new Object();
     obj.usuario.conversa = idConversa;
     obj.mvc = new Object();
     obj.mvc.class = 'mensagem';
     obj.mvc.method = 'listaMensagens';
-    console.log(1)
+    console.log(countRefresh)
     fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
     method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
     })
@@ -71,7 +72,7 @@ const recuperaValor = async(key)=>{
     //                     }
     //                     xml.send(JSON.stringify(obj))
     return () =>{
-      clearInterval(interval);
+      clearInterval(intervalo);
      }
  },[])
  
@@ -84,7 +85,7 @@ const recuperaValor = async(key)=>{
          <ScrollView contentContainerStyle={styles.scroll2} style={styles.scroll}> 
          {component}
             
-            
+           
           </ScrollView>
         
         

@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View,ImageBackground,TextInput,Button,TouchableOpacity,Image,ScrollView,Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-export default function App({conversas,users,myId,navigation}) {
+export default function App({conversas,users,myId,navigation,intervalToClear}) {
     
     const searchUserName = (array,id)=>{
       for(let i = 0;i < array.length;i++){
@@ -17,7 +17,7 @@ export default function App({conversas,users,myId,navigation}) {
     for(let i = 0;i < conversas.length;i++){
         elements.push(
           
-            <TouchableOpacity onPress={()=>{navigation.navigate('Mensagens',{idConversa:conversas[i].id,idUser:myId})}} key={conversas[i].id} style={styles.containerPressable}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('Mensagens',{idConversa:conversas[i].id,idUser:myId,intervalToClear:intervalToClear})}} key={conversas[i].id} style={styles.containerPressable}>
               <Image style={styles.imageUser} key={i} source={require('../img/user.png')}/>
               <Text key={i+1} style={styles.text}>{conversas[i].user1 == myId?searchUserName(users,conversas[i].user2):searchUserName(users,conversas[i].user1)}</Text>
               
