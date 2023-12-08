@@ -43,24 +43,29 @@ for(let i = 0;i < 10;i++){
 
 }
 
-  let refresher;
+ 
  useEffect(()=>{
-    
-    refresher = setInterval(()=>{
-    let obj = new Object();
-    obj.id = id;
-    obj.mvc = new Object();
-    obj.mvc.class = 'conversa';
-    obj.mvc.method = 'listarConversas';
-    
-    fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
-    method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
+    let refresher;
+    navigation.addListener('focus',()=>{
+      refresher = setInterval(()=>{
+        let obj = new Object();
+        obj.id = id;
+        obj.mvc = new Object();
+        obj.mvc.class = 'conversa';
+        obj.mvc.method = 'listarConversas';
+        
+        fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
+        method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
+        })
+        .then((response)=>response.json())
+        .then((objResponse)=>{setComponent(<Chats intervalToClear={refresher} navigation={navigation} conversas={objResponse.chats} users={objResponse.users} myId={id}/>); console.log('Conversas')})
+        
+        .catch((error)=>{console.log(error)})
+      },500)
     })
-    .then((response)=>response.json())
-    .then((objResponse)=>{setComponent(<Chats intervalToClear={refresher} navigation={navigation} conversas={objResponse.chats} users={objResponse.users} myId={id}/>); console.log('Conversas')})
-    
-    .catch((error)=>{console.log(error)})
-  },1000)
+    navigation.addListener('blur',()=>{
+      clearInterval(refresher)
+    })
 
   return ()=>{
     clearInterval(refresher)

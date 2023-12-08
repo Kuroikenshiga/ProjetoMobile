@@ -60,7 +60,7 @@ let countRefresh = 0;
     .then((objResponse)=>{setComponent(<Mensage msgs={objResponse.msg}myId={idUser} />)})
     
     .catch((error)=>{console.log(error)})
-    },1000)
+    },500)
     // let xml = new XMLHttpRequest()
     //                     xml.open('POST','https://projeto-mobile.rogeriopalafoz1.repl.co',true);
     //                     xml.setRequestHeader('content-type','application/json')
