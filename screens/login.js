@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { Alert,StyleSheet, Text, View,ImageBackground,TextInput,Button } from 'react-native';
+import { Alert,StyleSheet, Text, View,ImageBackground,TextInput,Button, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function App({navigation}) {
 //Beggin data section//
@@ -30,7 +30,7 @@ const guardaValor =  async(key,value)=>{
   value = JSON.stringify(value)
   try{
     await AsyncStorage.setItem(key,value);
-    Alert.alert('Dados armazenados')
+    console.log('Dados armazenados')
   }
   catch(error){
     Alert.alert("Erro no armazenamento",error.message)
@@ -81,7 +81,7 @@ useEffect(()=>{
 
 
   return (
-    <ImageBackground source={require('../img/dark.jpg')} style={styles.container}>
+    <ImageBackground source={require('../img/rm222-mind-14.jpg')} style={styles.container}>
         <Text style={styles.text}>
             Nome de usuario
         </Text>
@@ -91,24 +91,27 @@ useEffect(()=>{
             Senha
         </Text>
         <TextInput style={styles.input} onChangeText={(senha)=>{setSenha(senha)}}/>
-        <View style={styles.btn}><Button title='Entrar' color='green' 
-          onPress={()=>{
+        <TouchableOpacity style={styles.btnEntrar} onPress={()=>{
               fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
                 method:'POST', headers: {'contentType':'application/json'},body:JSON.stringify(obj)
               }).then((response)=>{ 
               return response.json()})
-              .then((obj1)=>{Alert.alert(JSON.stringify(obj1))
+              .then((obj1)=>{console.log(JSON.stringify(obj1))
                 if(obj1.msg != "NA"){ guardaValor('meuId',obj1.msg)
                navigation.navigate('Conversas',{id:obj1.msg})}
               else{Alert.alert('Aviso',"Usuario não encotrado")}})
               .catch((error)=>{})
               
             }
-          }
+          }>
+            <Text style={styles.btnText}>Entrar</Text>
+          </TouchableOpacity>
+          
         
-        /></View>
-        <View style={styles.btn}><Button title='Me cadastrar' color='#00000000' onPress={()=>{navigation.navigate('Cadastro')}}/></View>
-        <View style={styles.btn}><Button title='Amigos' color='#00000000' onPress={()=>{console.log(teste)+'23'}}/></View>
+      
+        <TouchableOpacity style={styles.btn} onPress={()=>{navigation.navigate('Cadastro')}}> 
+          <Text style={styles.btnText}>Cadastrar-me</Text>
+        </TouchableOpacity>
     </ImageBackground>
   );
 }
@@ -116,7 +119,7 @@ useEffect(()=>{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    //backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     
@@ -129,13 +132,32 @@ const styles = StyleSheet.create({
     marginTop:'5%'
   },
   text:{
-    fontSize:15,
-    color: "white",
-    marginTop:'5%'
+    fontSize:18,
+    color: "#1E3CF9",
+    marginTop:'5%',
+    fontWeight:'bold'
   },
   btn:{
     borderRadius:10,
     marginTop:'5%',
-    
+    backgroundColor:'#FEFE40',
+    width:'25%',
+    height:'5%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight:'bold'
+  },
+  btnEntrar:{
+    borderRadius:10,
+    marginTop:'5%',
+    backgroundColor:'#1EDEF9',
+    width:'25%',
+    height:'5%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight:'bold'
+  },
+  btnText:{
+    fontWeight:'bold'
   }
 });

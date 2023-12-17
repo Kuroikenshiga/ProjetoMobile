@@ -43,6 +43,7 @@ export default function App({conversas,users,myId,navigation,intervalToClear}) {
 const styles = StyleSheet.create({
   container: {
     width:'100%',
+    
     flex: 1,
     backgroundColor: '#a5c3e6',
     alignItems: 'flex-end',
@@ -53,11 +54,13 @@ const styles = StyleSheet.create({
   containerPressable: {
    
     width:'100%',
-    backgroundColor: '#a5c3e6',
+    height:50,
+    //backgroundColor: '#FFFFFF',
     
     justifyContent: 'flex-start',
     flexDirection:'row',
-    
+    alignItems:'center',
+    paddingLeft:'2%'
   },
   input:{
     width:'70%',

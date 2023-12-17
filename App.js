@@ -18,13 +18,25 @@ export default function App() {
  
   return (
     <NavigationContainer>
-      <stack.Navigator initialRouteName={'Login'}>
-        <stack.Screen name='Cadastro' component={cadastro} />
-        <stack.Screen name='Login' component={login}/>
-        <stack.Screen name='Amigos' component={amigos}/>
-        <stack.Screen name='Conversas' component={conversas}/>
-        <stack.Screen name='Nova conversa' component={buscarUsuario}/>
-        <stack.Screen name='Mensagens' component={mensagensDaConversa}/>
+      <stack.Navigator initialRouteName={'Login'} >
+        <stack.Screen name='Cadastro' component={cadastro} options={{headerStyle: {
+            backgroundColor: '#00BCCC',
+          }}}/>
+        <stack.Screen name='Login' component={login} options={{headerStyle: {
+            backgroundColor: '#00BCCC',
+          }}}/>
+        <stack.Screen name='Amigos' component={amigos}options={{headerStyle: {
+            backgroundColor: '#00BCCC',
+          }}}/>
+        <stack.Screen name='Conversas' component={conversas}options={{headerStyle: {
+            backgroundColor: '#00BCCC',
+          }}}/>
+        <stack.Screen name='Nova conversa' component={buscarUsuario}options={{headerStyle: {
+            backgroundColor: '#00BCCC',
+          }}}/>
+        <stack.Screen name='Mensagens' component={mensagensDaConversa}options={{headerStyle: {
+            backgroundColor: '#00BCCC',
+          }}}/>
       </stack.Navigator>
     </NavigationContainer>
   );

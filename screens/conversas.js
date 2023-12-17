@@ -7,7 +7,7 @@ import Chats from '../comps/conversasComponent.js'
 export default function App({navigation,route}) {
   const {id} = route.params
   //console.log(id+'0000')
-const [text,setText] = useState(new Array())
+
 const [component,setComponent] = useState(<Chats conversas={[]} myId={id} users={[]}/>)
 //const [id,setId] = useState(null)
 
@@ -38,34 +38,40 @@ const recuperaValor = async(key)=>{
    return null
   }
 }
-for(let i = 0;i < 10;i++){
-  text.push(<Text>{i}</Text>)
 
-}
 
  
  useEffect(()=>{
+  navigation.addListener('blur',()=>{
+    clearInterval(refresher)
+  })
     let refresher;
     navigation.addListener('focus',()=>{
-      refresher = setInterval(()=>{
-        let obj = new Object();
-        obj.id = id;
-        obj.mvc = new Object();
-        obj.mvc.class = 'conversa';
-        obj.mvc.method = 'listarConversas';
+      let isPaused = false;
+      
         
-        fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
-        method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
-        })
-        .then((response)=>response.json())
-        .then((objResponse)=>{setComponent(<Chats intervalToClear={refresher} navigation={navigation} conversas={objResponse.chats} users={objResponse.users} myId={id}/>); console.log('Conversas')})
-        
-        .catch((error)=>{console.log(error)})
-      },500)
+        refresher = setInterval(()=>{
+          if(!isPaused){
+            isPaused = true;
+          let obj = new Object();
+          obj.id = id;
+          obj.mvc = new Object();
+          obj.mvc.class = 'conversa';
+          obj.mvc.method = 'listarConversas';
+          
+          fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
+          method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify(obj)
+          
+          })
+          .then((response)=>response.json())
+          .then((objResponse)=>{setComponent(<Chats intervalToClear={refresher} navigation={navigation} conversas={objResponse.chats} users={objResponse.users} myId={id}/>); console.log('Conversas');isPaused = false})
+          
+          .catch((error)=>{console.log(error)})
+        }
+        },500)
+      
     })
-    navigation.addListener('blur',()=>{
-      clearInterval(refresher)
-    })
+    
 
   return ()=>{
     clearInterval(refresher)
@@ -73,14 +79,14 @@ for(let i = 0;i < 10;i++){
  },[])
   return (
 
-    <ImageBackground style={styles.container}>
+    <ImageBackground style={styles.container} source={require('../img/rm222-mind-14.jpg')}>
          <ScrollView contentContainerStyle={styles.scroll2} style={styles.scroll}> 
          {component}
             
           </ScrollView>
         
         
-        <TouchableOpacity  style={styles.btn} onPress={()=>{
+        <TouchableOpacity  style={styles.btn}  onPress={()=>{
          
           navigation.navigate('Nova conversa',{id:id})
           // console.log(id)
@@ -116,7 +122,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
     flexDirection:'column',
-    alignItems:'center'
+    alignItems:'center',
+    
+    
   },
   input:{
     width:'70%',
