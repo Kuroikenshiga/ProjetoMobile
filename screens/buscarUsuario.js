@@ -41,6 +41,10 @@ export default function App({navigation,route}) {
           })
           .then((response)=>response.json())
           .then((obj)=>{
+            if(obj.msg == 'Usuario não encontrado'){
+              Alert.alert(obj.msg)
+              return 0
+            }
             objRequest = new Object();
             objRequest.usuario = new Object()
             objRequest.usuario.user1 = id;
@@ -57,7 +61,12 @@ export default function App({navigation,route}) {
             .catch((error)=>{
               Alert.alert('erro',error.message)
             })
-          //   let xml = new XMLHttpRequest()
+          
+          })
+          .catch((error)=>{
+            Alert.alert('Error',error.message)
+          })
+          // let xml = new XMLHttpRequest()
           //   xml.open('POST','https://projeto-mobile.rogeriopalafoz1.repl.co',true);
           //   xml.setRequestHeader('content-type','application/json')
 
@@ -66,12 +75,7 @@ export default function App({navigation,route}) {
           //       console.log(xml.responseText)
           //     }
           //   }
-          //   xml.send(JSON.stringify(objRequest))
-          // })
-          // .catch((error)=>{
-          //   Alert.alert('Error',error.message)
-          })
-        
+          //   xml.send(JSON.stringify(obj))
   }}>
           <Image source={require('../img/chatWith.png')} style={{width:30}}/>
         </TouchableOpacity>

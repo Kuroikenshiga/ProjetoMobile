@@ -37,7 +37,7 @@ export default function App() {
 
         <stack.Screen name='Nova conversa' component={buscarUsuario}/>
 
-        <stack.Screen name='Mensagens' component={mensagensDaConversa} options={({ route }) => ({ title: route.params.ScreenName,headerRight:route.params.imageUser})}/>
+        <stack.Screen name='Mensagens' component={mensagensDaConversa} options={({ navigation,route }) => ({headerRigth:()=>(<Image source={require('./img/userAvatars/GatuArrumado.jpg')}/>), title: route.params.ScreenName,})}/>
            <stack.Screen  name='Selecionar imagem de perfil' component={selectAvatar}/>
       </stack.Navigator>
     </NavigationContainer>
@@ -45,3 +45,4 @@ export default function App() {
 }
 
 
+// ,imageUser:()=>(<Image style={styles.imageUser} source={conversas[i].user1 == myId?searchUserAvatar(users,conversas[i].user2):searchUserAvatar(users,conversas[i].user1)}/>)

@@ -54,13 +54,45 @@ export default function App({conversas,users,myId,navigation,intervalToClear}) {
       }
       return null;
     }
-    
+    const searchUserAvatarUrl = (array,id)=>{
+      for(let i = 0;i < array.length;i++){
+        if(array[i].id == id){
+          if('../img/userAvatars/EuSabo.jpg' == array[i].avatar){
+            return '../img/userAvatars/EuSabo.jpg';
+          }
+          if('../img/userAvatars/GatuArrumado.jpg' == array[i].avatar){
+            return '../img/userAvatars/GatuArrumado.jpg';
+          }
+          if('../img/userAvatars/ParaDeRir.jpg' == array[i].avatar){
+            return '../img/userAvatars/ParaDeRir.jpg';
+          }
+          if('../img/userAvatars/Smurfi.jpg' == array[i].avatar){
+            return '../img/userAvatars/Smurfi.jpg';
+          }
+          if('../img/userAvatars/Xereque.jpg' == array[i].avatar){
+            return '../img/userAvatars/Xereque.jpg';
+          }
+          if('../img/userAvatars/Smile.jpg' == array[i].avatar){
+            return '../img/userAvatars/Smile.jpg';
+          }
+          if('../img/userAvatars/Oxe.jpg' == array[i].avatar){
+            return '../img/userAvatars/Oxe.jpg';
+          }
+          if('../img/userAvatars/Makima.jpg' == array[i].avatar){
+            return '../img/userAvatars/Makima.jpg';
+          }
+          return '../img/userAvatars/Jesus.jpg';
+        }
+      }
+      return null;
+    }
     elements = new Array();
     for(let i = 0;i < conversas.length;i++){
         
         elements.push(
           
-            <TouchableOpacity onPress={()=>{navigation.navigate('Mensagens',{idConversa:conversas[i].id,idUser:myId,ScreenName:conversas[i].user1 == myId?searchUserName(users,conversas[i].user2):searchUserName(users,conversas[i].user1),imageUser:()=>(<Image style={styles.imageUser} source={conversas[i].user1 == myId?searchUserAvatar(users,conversas[i].user2):searchUserAvatar(users,conversas[i].user1)}/>),intervalToClear:intervalToClear})}} key={conversas[i].id} style={styles.containerPressable}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('Mensagens',{idConversa:conversas[i].id,idUser:myId,ScreenName:conversas[i].user1 == myId?searchUserName(users,conversas[i].user2):searchUserName(users,conversas[i].user1),intervalToClear:intervalToClear,url:conversas[i].user1 == myId?searchUserAvatarUrl(users,conversas[i].user2):searchUserAvatarUrl(users,conversas[i].user1)})}} key={conversas[i].id} style={styles.containerPressable}>
+
               <Image style={styles.imageUser} key={i} source={conversas[i].user1 == myId?searchUserAvatar(users,conversas[i].user2):searchUserAvatar(users,conversas[i].user1)}/>
               <Text key={i+1} style={styles.UserName}>{conversas[i].user1 == myId?searchUserName(users,conversas[i].user2):searchUserName(users,conversas[i].user1)}</Text>
               

@@ -1,13 +1,55 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState,useRef } from 'react';
-import { StyleSheet, Text, View, ImageBackground, TextInput, Button, TouchableOpacity, Image, ScrollView, Alert,LogBox } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, Button, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import img1 from '../img/userAvatars/EuSabo.jpg';
+import img2 from '../img/userAvatars/GatuArrumado.jpg';
+import img3 from '../img/userAvatars/ParaDeRir.jpg';
+import img4 from '../img/userAvatars/Smurfi.jpg';
+import img5 from '../img/userAvatars/Xereque.jpg';
+import img6 from '../img/userAvatars/Smile.jpg';
+import img7 from '../img/userAvatars/Oxe.jpg';
+import img8 from '../img/userAvatars/Makima.jpg';
+import img9 from '../img/userAvatars/Jesus.jpg';
 import Mensage from '../comps/msgComponent.js';
-export default function App({ navigation, route}) {
-  LogBox.ignoreLogs([ 'Non-serializable values were found in the navigation state',])
-  const { idConversa, idUser, intervalToClear } = route.params;
 
+function getImage(url){
+  
+    if('../img/userAvatars/EuSabo.jpg' == url){
+      return img1;
+    }
+    if('../img/userAvatars/GatuArrumado.jpg' == url){
+      return img2;
+    }
+    if('../img/userAvatars/ParaDeRir.jpg' == url){
+      return img3;
+    }
+    if('../img/userAvatars/Smurfi.jpg' == url){
+      return img4;
+    }
+    if('../img/userAvatars/Xereque.jpg' == url){
+      return img5;
+    }
+    if('../img/userAvatars/Smile.jpg' == url){
+      return img6;
+    }
+    if('../img/userAvatars/Oxe.jpg' == url){
+      return img7;
+    }
+    if('../img/userAvatars/Makima.jpg' == url){
+      return img8;
+    }
+    return img9;
+  
+}
+
+
+
+
+export default function App({ navigation, route}) {
+  //LogBox.ignoreLogs([ 'Non-serializable values were found in the navigation state',])
+  const { idConversa, idUser, intervalToClear,url } = route.params;
+ // console.log(url)
   const textInput = useRef();
   const clearField = ()=>{
 
@@ -49,7 +91,7 @@ export default function App({ navigation, route}) {
   let countRefresh = 0;
 
   useEffect(() => {
-    
+    navigation.setOptions({headerRight:()=>(<Image style={styles.imageUser} source={getImage(url)}/>)})
     //clearInterval(intervalToClear)
     let isPaused = false;
     const intervalo = setInterval(() => {
@@ -85,7 +127,7 @@ export default function App({ navigation, route}) {
     //                     }
     //                     xml.send(JSON.stringify(obj))
     return () => {
-      setMsg("")
+      
       clearInterval(intervalo);
     }
   }, [])
@@ -110,6 +152,7 @@ export default function App({ navigation, route}) {
             return 0
           }
           clearField();
+          setMsg("")
           let now = new Date()
           obj = new Object();
           obj.mvc = new Object();
@@ -143,10 +186,10 @@ export default function App({ navigation, route}) {
                 .then((response) => response.json())
                 .then((objResponse) => { setComponent(<Mensage msgs={objResponse.msg} myId={idUser} />) })
 
-                .catch((error) => { console.log(error) })
+                .catch((error) => {console.log('1°') })
             })
 
-            .catch((error) => { console.log(error) });
+            .catch((error) => { console.log('2°') });
 
 
 
@@ -224,5 +267,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     bottom: 0
+  },
+  imageUser:{
+    width:50,
+    height:50,
+    borderRadius:30
   }
 });
