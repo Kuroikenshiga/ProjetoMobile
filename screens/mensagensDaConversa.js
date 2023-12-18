@@ -1,14 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useRef } from 'react';
 import { StyleSheet, Text, View, ImageBackground, TextInput, Button, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Mensage from '../comps/msgComponent.js';
-export default function App({ navigation, route }) {
+export default function App({ navigation, route}) {
+  
   const { idConversa, idUser, intervalToClear } = route.params;
 
-
-  const rolagem = ScrollView;
+  const textInput = useRef();
+  const clearField = ()=>{
+    textInput.current.clear()
+  }
   const [component, setComponent] = useState(null)
   const [id, setId] = useState(null)
   const [msg, setMsg] = useState('');
@@ -45,6 +48,7 @@ export default function App({ navigation, route }) {
   let countRefresh = 0;
 
   useEffect(() => {
+    
     //clearInterval(intervalToClear)
     let isPaused = false;
     const intervalo = setInterval(() => {
@@ -86,7 +90,7 @@ export default function App({ navigation, route }) {
 
   return (
 
-    <ImageBackground style={styles.container}>
+    <ImageBackground style={styles.container} blurRadius={10} source={require('../img/rm222-mind-14.jpg')}>
 
 
 
@@ -98,8 +102,9 @@ export default function App({ navigation, route }) {
 
 
       <View style={styles.bottom}>
-        <TextInput onChangeText={(texto) => { setMsg(texto) }} style={styles.input} />
+        <TextInput ref={textInput} multiline={true} onChangeText={(texto) => { setMsg(texto) }} style={styles.input} />
         <TouchableOpacity style={styles.btn} onPress={() => {
+          clearField();
           let now = new Date()
           obj = new Object();
           obj.mvc = new Object();
@@ -107,8 +112,8 @@ export default function App({ navigation, route }) {
           obj.mvc.method = 'novaMensagem';
           obj.usuario = new Object();
           obj.usuario.remetente = idUser;
-          obj.usuario.data = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate()
-          obj.usuario.hora = (now.getHours() * 60) + now.getMinutes()
+          
+          //obj.usuario.hora = (now.getHours() * 60) + now.getMinutes()
           obj.usuario.mensagem = msg;
           obj.usuario.conversa = idConversa;
 
@@ -165,7 +170,7 @@ const styles = StyleSheet.create({
   container: {
 
     flex: 1,
-    backgroundColor: '#a5c3e6',
+   // backgroundColor: '#a5c3e6',
     alignItems: 'center',
 
     flexDirection: 'column',

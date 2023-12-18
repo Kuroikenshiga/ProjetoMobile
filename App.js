@@ -8,6 +8,7 @@ import amigos from './screens/amigos.js';
 import conversas from './screens/conversas.js';
 import buscarUsuario from './screens/buscarUsuario.js';
 import mensagensDaConversa from './screens/mensagensDaConversa.js';
+import selectAvatar from './screens/selecionarImagemDeperfil.js'
 import { Alert } from 'react-native';
 
 export default function App() {
@@ -17,26 +18,24 @@ export default function App() {
   const stack = createStackNavigator();
  
   return (
-    <NavigationContainer>
-      <stack.Navigator initialRouteName={'Login'} >
-        <stack.Screen name='Cadastro' component={cadastro} options={{headerStyle: {
+    <NavigationContainer >
+
+      <stack.Navigator screenOptions={{headerStyle: {
             backgroundColor: '#00BCCC',
-          }}}/>
-        <stack.Screen name='Login' component={login} options={{headerStyle: {
-            backgroundColor: '#00BCCC',
-          }}}/>
-        <stack.Screen name='Amigos' component={amigos}options={{headerStyle: {
-            backgroundColor: '#00BCCC',
-          }}}/>
-        <stack.Screen name='Conversas' component={conversas}options={{headerStyle: {
-            backgroundColor: '#00BCCC',
-          }}}/>
-        <stack.Screen name='Nova conversa' component={buscarUsuario}options={{headerStyle: {
-            backgroundColor: '#00BCCC',
-          }}}/>
-        <stack.Screen name='Mensagens' component={mensagensDaConversa}options={{headerStyle: {
-            backgroundColor: '#00BCCC',
-          }}}/>
+          }}} initialRouteName={'Login'} >
+
+        <stack.Screen name='Cadastro' component={cadastro} />
+
+        <stack.Screen name='Login' component={login} />
+
+        <stack.Screen name='Amigos' component={amigos}/>
+
+        <stack.Screen name='Conversas' component={conversas}/>
+
+        <stack.Screen name='Nova conversa' component={buscarUsuario}/>
+
+        <stack.Screen name='Mensagens' component={mensagensDaConversa} options={({ route }) => ({ title: route.params.ScreenName,headerRight:route.params.imageUser})}/>
+           <stack.Screen  name='Selecionar imagem de perfil' component={selectAvatar}/>
       </stack.Navigator>
     </NavigationContainer>
   );

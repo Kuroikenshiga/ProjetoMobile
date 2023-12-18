@@ -79,7 +79,7 @@ const recuperaValor = async(key)=>{
  },[])
   return (
 
-    <ImageBackground style={styles.container} source={require('../img/rm222-mind-14.jpg')}>
+    <ImageBackground style={styles.container} source={require('../img/rm222-mind-14.jpg')} blurRadius={7}>
          <ScrollView contentContainerStyle={styles.scroll2} style={styles.scroll}> 
          {component}
             
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   container: {
    
     flex: 1,
-    backgroundColor: '#a5c3e6',
+    //backgroundColor: '#a5c3e6',
     alignItems: 'center',
     
     flexDirection:'column',

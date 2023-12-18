@@ -53,7 +53,7 @@ export default function App({navigation,route}) {
               method:'Post', headers:{'content-type':'application/json'},body:JSON.stringify(objRequest)
             })
             .then((response)=>response.json())
-            .then((objResponse)=>{if(objResponse.msg == 'OK'){navigation.navigate('Conversas')}else{Alert.alert('Falha')}})
+            .then((objResponse)=>{if(objResponse.msg == 'OK'){navigation.navigate('Conversas',{id:id})}else{Alert.alert('Falha')}})
             .catch((error)=>{
               Alert.alert('erro',error.message)
             })

@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState,useEffect } from 'react';
-import {StyleSheet, Text, View,ImageBackground,TextInput,Button, Alert } from 'react-native';
+import {StyleSheet, Text, View,ImageBackground,TextInput,Button, Alert, TouchableOpacity } from 'react-native';
 //import {AsyncStorage} from '@react-native-async-storage/async-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function App({navigation}) {
@@ -9,10 +9,10 @@ export default function App({navigation}) {
   const obj = new Object();
   obj.mvc = new Object();
   obj.usuario = new Object()
-  obj.mvc.class = "usuario";
-  obj.mvc.method = "insert"
   obj.usuario.nome = nome;
-  obj.usuario.senha = senha;
+  obj.mvc.class = "usuario";
+  obj.mvc.method = "verificaNomeJaEmUso";
+
   const [value,setValue] = useState('')
 
   const guardaValor =  async(key,value)=>{
@@ -27,30 +27,51 @@ export default function App({navigation}) {
   
   useEffect(()=>{},[])
   return (
-    <ImageBackground source={require('../img/dark.jpg')} style={styles.container}>
+    <ImageBackground source={require('../img/rm222-mind-14.jpg')} style={styles.container}>
         <Text style={styles.text}>
-            Nome de usuario
+            Insira seu nome de usuário
         </Text>
         <TextInput style={styles.input} onChangeText={(nome)=>{setNome(nome)}} />
         
         <Text style={styles.text}>
-            Senha
+            Insira uma senha
         </Text>
         <TextInput style={styles.input} onChangeText={(senha)=>{setSenha(senha)}}/>
-        <View style={styles.btn}><Button title='Cadastrar' color='green' 
+        <TouchableOpacity style={styles.btnEntrar}
           onPress={()=>{
+            // let xml = new XMLHttpRequest()
+            // xml.open('POST','https://projeto-mobile.rogeriopalafoz1.repl.co',true);
+            // xml.setRequestHeader('content-type','application/json')
+
+            // xml.onreadystatechange = ()=>{
+            //   if(xml.readyState == 4 && xml.status == 200){
+            //     console.log(xml.responseText)
+            //   }
+            // }
+            // xml.send(JSON.stringify(obj))
+            if(nome == "" || senha == ""){
+              Alert.alert('Preencha todos os campos');
+              return
+            }
               fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
                 method:'POST', headers: {'contentType':'application/json'},body:JSON.stringify(obj)
               }).then((response)=>response.json()).then((obj)=>{
-                navigation.navigate('Login')
-                
+                console.log(JSON.stringify(obj))
+                if(obj.msg == "OK"){
+                  navigation.navigate('Selecionar imagem de perfil',{user:nome,password:senha})
+                }
+                else{
+                  Alert.alert("Atenção",obj.msg)
+                }
                 
 
-              }).catch((error)=>{Alert.alert('error',error)})
+              }).catch((error)=>{Alert.alert('error')})
             }
-          }
+          }>
+            <Text>Próximo</Text>
+          </TouchableOpacity>
         
-        /></View>
+       
         <Text style={styles.text}>{value}</Text>
         
     </ImageBackground>
@@ -72,14 +93,26 @@ const styles = StyleSheet.create({
     borderRadius:45,
     marginTop:'5%'
   },
-  text:{
-    fontSize:15,
-    color: "white",
-    marginTop:'5%'
-  },
+  
   btn:{
     borderRadius:10,
     marginTop:'5%',
    
-  }
+  },
+  btnEntrar:{
+    borderRadius:10,
+    marginTop:'5%',
+    backgroundColor:'#1EDEF9',
+    width:'25%',
+    height:'5%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight:'bold'
+  },
+  text:{
+    fontSize:18,
+    color: "#1E3CF9",
+    marginTop:'5%',
+    fontWeight:'bold'
+  },
 });
