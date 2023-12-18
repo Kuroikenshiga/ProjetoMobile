@@ -1,15 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState,useRef } from 'react';
-import { StyleSheet, Text, View, ImageBackground, TextInput, Button, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, Button, TouchableOpacity, Image, ScrollView, Alert,LogBox } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Mensage from '../comps/msgComponent.js';
 export default function App({ navigation, route}) {
-  
+  LogBox.ignoreLogs([ 'Non-serializable values were found in the navigation state',])
   const { idConversa, idUser, intervalToClear } = route.params;
 
   const textInput = useRef();
   const clearField = ()=>{
+
     textInput.current.clear()
   }
   const [component, setComponent] = useState(null)
@@ -84,6 +85,7 @@ export default function App({ navigation, route}) {
     //                     }
     //                     xml.send(JSON.stringify(obj))
     return () => {
+      setMsg("")
       clearInterval(intervalo);
     }
   }, [])
@@ -104,6 +106,9 @@ export default function App({ navigation, route}) {
       <View style={styles.bottom}>
         <TextInput ref={textInput} multiline={true} onChangeText={(texto) => { setMsg(texto) }} style={styles.input} />
         <TouchableOpacity style={styles.btn} onPress={() => {
+          if(msg == ""){
+            return 0
+          }
           clearField();
           let now = new Date()
           obj = new Object();

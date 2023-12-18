@@ -25,8 +25,8 @@ export default function App({navigation,route}) {
  
   return (
 
-    <ImageBackground style={styles.container}>
-        <Text>Informe o nome de usuário para conversar</Text>
+    <ImageBackground style={styles.container}blurRadius={10} source={require('../img/rm222-mind-14.jpg')}>
+        <Text style={styles.text}>Informe o nome de usuário para conversar</Text>
         <TextInput style={styles.input} onChangeText={(t)=>{setNome(t)}}></TextInput>
         <TouchableOpacity style={styles.btn} onPress={()=>{
           const obj = new Object()
@@ -73,7 +73,7 @@ export default function App({navigation,route}) {
           })
         
   }}>
-          <Image source={require('../img/add.png')}/>
+          <Image source={require('../img/chatWith.png')} style={{width:30}}/>
         </TouchableOpacity>
     </ImageBackground>
   );
@@ -97,9 +97,10 @@ const styles = StyleSheet.create({
     marginTop:'5%'
   },
   text:{
-    fontSize:15,
-    color: "white",
-    textAlign:'center'
+    fontSize:18,
+    color: "#1E3CF9",
+    marginTop:'5%',
+    fontWeight:'bold'
   },
   btn:{
     

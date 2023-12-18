@@ -15,7 +15,7 @@ const clearData = async()=>{
 
     try{
        AsyncStorage.setItem('meuId','')
-      Alert.alert('Dados limpos')
+      console.log('Dados limpos')
     }
     catch(error){
       Alert.alert('Erro ao limpar os dados',error.message)
@@ -42,6 +42,9 @@ const recuperaValor = async(key)=>{
 
  
  useEffect(()=>{
+  navigation.setOptions({
+    headerRight:()=>(<TouchableOpacity style={styles.btnExit} onPress={()=>{clearData();navigation.navigate('Login')}}><Text style={styles.text}>Sair</Text></TouchableOpacity>)
+  })
   navigation.addListener('blur',()=>{
     clearInterval(refresher)
   })
@@ -108,7 +111,7 @@ const recuperaValor = async(key)=>{
             
            
   }}>
-          <Image source={require('../img/add.png')}/>
+          <Image source={require('../img/NewChat.png')} style={{width:30}}/>
         </TouchableOpacity>
     </ImageBackground>
   );
@@ -135,13 +138,14 @@ const styles = StyleSheet.create({
   },
   text:{
     fontSize:15,
-    color: "white",
-    textAlign:'center'
+    color: "#3C8BA0",
+    textAlign:'center',
+    fontWeight:'bold'
   },
   btn:{
     
    
-    backgroundColor:'#7C93AC',
+    backgroundColor:'#3C8BA0',
     width:'20%',
     height:'10%',
     alignItems:'center',
@@ -160,5 +164,12 @@ const styles = StyleSheet.create({
     display:'flex',
     flexDirection:'column',
     alignItems:'center'
+  },
+  btnExit:{
+    width:'40%',
+    height:'70%',
+    backgroundColor:'#64DCFC',
+    borderRadius:50,
+    justifyContent:'center'
   }
 });

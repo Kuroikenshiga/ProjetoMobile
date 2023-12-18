@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ImageBackground, TextInput, Button, Alert, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, Button, Alert, TouchableOpacity, Image,LogBox } from 'react-native';
 //import {AsyncStorage} from '@react-native-async-storage/async-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function App({ navigation, route}) {
+    LogBox.ignoreLogs(['Warning:'])
     const {user,password} = route.params;
     const [src,setSrc] = useState('');
-    const [imgUser,setImgUser] = useState('');
+    const [imgUser,setImgUser] = useState(null);
     const [previewDisplay,setPreviewDisplay] = useState(styles.preViewHidden)
     const obj = new Object();
     obj.mvc = new Object();
@@ -100,6 +101,10 @@ export default function App({ navigation, route}) {
             </View>
             <TouchableOpacity style={styles.btnEntrar}
                 onPress={() => {
+                    if(imgUser == null){
+                        Alert.alert('Selecione uma imagem de perfil')
+                        return 0
+                    }
                     console.log(JSON.stringify(obj))
                     fetch('https://projeto-mobile.rogeriopalafoz1.repl.co',{
                       method:'POST', headers: {'contentType':'application/json'},body:JSON.stringify(obj)

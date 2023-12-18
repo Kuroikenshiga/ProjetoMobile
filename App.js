@@ -2,6 +2,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useEffect, useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 import cadastro from './screens/cadastro.js';
 import login from './screens/login.js';
 import amigos from './screens/amigos.js';
@@ -30,7 +31,9 @@ export default function App() {
 
         <stack.Screen name='Amigos' component={amigos}/>
 
-        <stack.Screen name='Conversas' component={conversas}/>
+        <stack.Screen name='Conversas' component={conversas} options={({navigation,route})=>({
+          headerRight:()=>(<TouchableOpacity></TouchableOpacity>)
+        })}/>
 
         <stack.Screen name='Nova conversa' component={buscarUsuario}/>
 
